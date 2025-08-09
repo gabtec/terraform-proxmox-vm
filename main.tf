@@ -78,13 +78,17 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   operating_system {
     type = "l26"
   }
+}
 
-  // to use remote provisioner
+
+resource "null_resource" "provision" {
+  count = var.enable_provisioning ? 1 : 0
+
   connection {
-    type        = "ssh"
-    user        = var.vm_user
+    type     = "ssh"
+    user     = var.vm_user
+    host     = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
     private_key = file(var.ssh_private_key_path)
-    host        = self.ipv4_addresses[1][0]
   }
 
   provisioner "remote-exec" {

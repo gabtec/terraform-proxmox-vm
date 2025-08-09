@@ -133,3 +133,9 @@ variable "ssh_private_key_path" {
   default     = "~/.ssh/id_ed25519"
   # TODO: PROXMOX_VE_SSH_PRIVATE_KEY
 }
+
+
+variable "enable_provisioning" {
+  type    = bool
+  default = true
+}
