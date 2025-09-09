@@ -1,5 +1,5 @@
 module "vm" {
-  source = "git@github.com:gabtec/terraform-proxmox-vm.git?ref=v0.1.0"
+  source = "git@github.com:gabtec/terraform-proxmox-vm.git?ref=v0.1.2"
 
   # providers specs
   px_addr              = var.px_addr

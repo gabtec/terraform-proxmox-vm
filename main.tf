@@ -81,8 +81,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 }
 
 
-resource "null_resource" "provision" {
-  count = var.enable_provisioning ? 1 : 0
+resource "null_resource" "provision_user_on_docker_group" {
+  count = var.add_user_to_docker_group ? 1 : 0
 
   connection {
     type     = "ssh"

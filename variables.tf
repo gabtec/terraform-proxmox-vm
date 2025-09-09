@@ -134,8 +134,8 @@ variable "ssh_private_key_path" {
   # TODO: PROXMOX_VE_SSH_PRIVATE_KEY
 }
 
-
-variable "enable_provisioning" {
+variable "add_user_to_docker_group" {
   type    = bool
-  default = true
+  default = false
+  description = "If you use a base image already with docker installed, you can choose to add user to docker group"
 }
