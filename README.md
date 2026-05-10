@@ -13,7 +13,11 @@ This is a custom, opinionated, proxmox module to create a vm
 
 ```hcl
 module "vm" {
-  source = "git@github.com:gabtec/terraform-proxmox-vm.git?ref=v0.1.1"
+  source = "git@github.com:gabtec/terraform-proxmox-vm.git?ref=v0.1.4"
   # ...
 }
 ```
+
+## Docs
+
+- [Module Documentation](./docs/module-vm.md)
