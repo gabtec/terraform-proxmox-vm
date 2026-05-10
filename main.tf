@@ -1,11 +1,11 @@
+locals { just_ip = split("/", var.vm_ip)[0] }
+
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
-  name = var.vm_name
-  tags = var.vm_tags_list
-  # description will show on proxmox vm notes, dashboard
-  description = "# ${var.vm_desc_header}\n\n- createdBy: ${var.vm_desc_props.createdBy}\n- createdFor: ${var.vm_desc_props.createdFor}\n- createdWith: ${var.vm_desc_props.createdWith}" # will show on proxmox vm notes
-  node_name   = var.px_node
   vm_id       = var.vm_id
+  name = var.vm_name
+  node_name   = var.px_node
+  tags      = concat([local.just_ip], var.extra_tags)
 
   agent {
     # read 'Qemu guest agent' section, change to true only when ready
@@ -14,7 +14,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   clone {
     full         = true
-    vm_id        = var.vm_template_id
+    vm_id        = var.clone_from
     datastore_id = var.vm_storage_pool
   }
 
@@ -26,7 +26,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   memory {
     dedicated = var.vm_mem_in_mb # in MiB
-    # floating = 1024 # in MiB
+    floating  = var.vm_mem_in_mb # in MiB
     # shared = 1024 # in MiB
   }
 
@@ -78,6 +78,19 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   operating_system {
     type = "l26"
   }
+
+  description = <<-EOT
+    # ${title(var.vm_name)} Server
+
+    ## Services
+    ${join("\n", [for s in var.vm_services : "- ${s}"])}
+
+    ## Tags
+    - createdBy: ${ var.created_by }
+    - createdFor: Homelab
+    - createdWith: Terraform
+  EOT
+
 }
 
 
