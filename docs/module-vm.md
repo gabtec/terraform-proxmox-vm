@@ -9,8 +9,8 @@
 
 | Name | Version |
 | ---- | ------- |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
-| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | >=0.104.0 |
+| <a name="provider_null"></a> [null](#provider\_null) | 3.2.4 |
+| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | 0.106.0 |
 
 ## Modules
 
@@ -28,7 +28,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_add_user_to_docker_group"></a> [add\_user\_to\_docker\_group](#input\_add\_user\_to\_docker\_group) | If you use a base image already with docker installed, you can choose to add user to docker group | `bool` | `false` | no |
-| <a name="input_clone_from"></a> [clone\_from](#input\_clone\_from) | The template id, to create VM from | `number` | `9000` | no |
+| <a name="input_clone_from"></a> [clone\_from](#input\_clone\_from) | The VM Template ID to clone | `number` | `9024` | no |
 | <a name="input_created_by"></a> [created\_by](#input\_created\_by) | The name of the maintainer of this configs | `string` | `"me"` | no |
 | <a name="input_extra_tags"></a> [extra\_tags](#input\_extra\_tags) | Extra tags to add to the vm. By default the IP is added | `list` | `[]` | no |
 | <a name="input_px_addr"></a> [px\_addr](#input\_px\_addr) | Proxmox Server Address (ip:port or fqdn) | `string` | `"https://127.0.0.1:8006"` | no |
