@@ -1,21 +1,9 @@
 # --------------------------------------------- #
-#   Sensitive Variables (aka secrets)
-#   Should be provided from a keyVault
-# --------------------------------------------- #
-variable "vm_user" { sensitive = true }   # TODO: PROXMOX_VE_SSH_USERNAME
-variable "vm_secret" { sensitive = true } # TODO: PROXMOX_VE_SSH_PASSWORD
-variable "vm_authorized_ssh_keys" {
-  sensitive   = true
-  type        = string
-  description = "all public ssh keys authorized to access this vm (in a json list(string))"
-}
-# --------------------------------------------- #
-#   Provider Connection Config Variables
+#   Opinionated defaults
 # --------------------------------------------- #
 variable "px_node" {
-  description = "Proxmox Node name"
-  type        = string
   default     = "pve"
+  description = "The Proxmox node id"
 }
 
 variable "px_addr" {
@@ -29,6 +17,43 @@ variable "px_addr" {
   }
 }
 
+variable "clone_from" {
+  description = "The VM Template ID to clone"
+  default     = 9024
+  type        = number
+}
+
+variable "extra_tags" {
+  default     = []
+  description = "Extra tags to add to the vm. By default the IP is added"
+}
+
+variable "vm_services" {
+  description = "A list of services running in the VM. Will be listed in the notes markdown"
+  default     = []
+}
+
+# --------------------------------------------- #
+#   Sensitive Variables (aka secrets)
+#   Should be provided from a keyVault
+# --------------------------------------------- #
+variable "vm_user" {
+  # TODO: PROXMOX_VE_SSH_USERNAME
+  description = "The username to login into the vm"
+  sensitive   = true
+}
+variable "vm_secret" {
+  # TODO: PROXMOX_VE_SSH_PASSWORD
+  description = "The user password to login into the vm"
+  sensitive   = true
+}
+
+variable "vm_authorized_ssh_keys" {
+  sensitive   = true
+  type        = string
+  description = "All public ssh keys authorized to access this vm (in a json list(string))"
+}
+
 # --------------------------------------------- #
 #   VM Config Variables
 # --------------------------------------------- #
@@ -38,43 +63,15 @@ variable "vm_name" {
   default     = "server"
 }
 
-variable "vm_desc_header" {
-  description = "Proxmox VM descripton (shows up in Notes as a header)"
-  type        = string
-  # we can use markdown syntax
-  default = "Ubuntu Server"
-}
-
-variable "vm_desc_props" {
-  description = "This will be used to generate the VM Notes for Proxmox Dashboard"
-  type = object({
-    createdBy   = string
-    createdFor  = string
-    createdWith = string
-  })
-  default = {
-    createdBy   = "me"
-    createdFor  = "homelab"
-    createdWith = "terraform"
-  }
-}
-
-variable "vm_tags_list" {
-  type        = list(string)
-  default     = ["demo", "terraform"]
-  description = "This will appear as tags next to vm id/name, in left menu"
+variable "created_by" {
+  description = "The name of the maintainer of this configs"
+  default = "me"
 }
 
 variable "vm_id" {
   description = "Proxmox VM id"
   type        = number
   default     = 1000
-}
-
-variable "vm_template_id" {
-  description = "The template id, to create VM from"
-  type        = number
-  default     = 9000
 }
 
 variable "vm_storage_pool" {
