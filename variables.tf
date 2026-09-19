@@ -75,9 +75,27 @@ variable "vm_id" {
 }
 
 variable "vm_storage_pool" {
-  description = "The storage pool name, where to place vm disk"
+  description = "[Deprecated] Use vm_disks. The storage pool name, where to place vm disk"
   type        = string
   default     = "local-lvm"
+}
+
+variable "vm_disks" {
+  type = map(object({
+    datastore_id  = optional(string, "local-lvm")
+    size          = optional(number, 8)
+  }))
+  # Example
+  # disks = {
+  #   scsi0 = {
+  #     datastore_id = "local-lvm"
+  #     size         = 8
+  #   }
+  #   scsi1 = {
+  #     datastore_id = "local-lvm"
+  #     size         = 16
+  #   }
+  # }
 }
 
 variable "vm_cpus" {
@@ -93,7 +111,7 @@ variable "vm_mem_in_mb" {
 }
 
 variable "vm_disk_size_in_gb" {
-  description = "Proxmox VM disk size in GiB"
+  description = "[Deprecated] Use vm_disk. Proxmox VM disk size in GiB"
   type        = number
   default     = 8
 }

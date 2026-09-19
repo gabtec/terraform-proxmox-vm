@@ -30,11 +30,15 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     # shared = 1024 # in MiB
   }
 
-  disk {
-    datastore_id = var.vm_storage_pool
-    interface    = "scsi0"                # scsi | sata | virtio (+ index number)
-    size         = var.vm_disk_size_in_gb # disk size in gigabytes (defaults to 8).
-    ssd          = true                   # not supported in interface=virtio
+  dynamic disk {
+    for_each = var.vm_disks
+
+    content {
+      interface    = disk.key               # scsi | sata | virtio (+ index number)
+      datastore_id = disk.datastore_id
+      size         = disk.size              # disk size in gigabytes (defaults to 8).
+      ssd          = true                   # not supported in interface=virtio
+    }
   }
 
   # for Cloud-init
