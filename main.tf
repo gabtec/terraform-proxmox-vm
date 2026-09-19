@@ -35,8 +35,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
     content {
       interface    = disk.key               # scsi | sata | virtio (+ index number)
-      datastore_id = disk.datastore_id
-      size         = disk.size              # disk size in gigabytes (defaults to 8).
+      datastore_id = disk.value.datastore_id
+      size         = disk.value.size              # disk size in gigabytes (defaults to 8).
       ssd          = true                   # not supported in interface=virtio
     }
   }
