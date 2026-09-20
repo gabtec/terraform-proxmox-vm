@@ -86,27 +86,27 @@ variable "clone_spool" {
   default     = "local-lvm"
 }
 
-variable "vm_disks" {
-  type = map(object({
-    size              = optional(number, 8)
-    ssd               = optional(bool, true)
-    datastore_id      = optional(string, "local-lvm")
-    file_format       = optional(string, "raw")
-    # path_in_datastore = optional(string)
-    # file_id           = optional(string)
-  }))
-  # Example
-  # disks = {
-  #   scsi0 = {
-  #     datastore_id = "local-lvm"
-  #     size         = 8
-  #   }
-  #   scsi1 = {
-  #     datastore_id = "local-lvm"
-  #     size         = 16
-  #   }
-  # }
-}
+# variable "vm_disks" {
+#   type = map(object({
+#     size              = optional(number, 8)
+#     ssd               = optional(bool, true)
+#     datastore_id      = optional(string, "local-lvm")
+#     file_format       = optional(string, "raw")
+#     # path_in_datastore = optional(string)
+#     # file_id           = optional(string)
+#   }))
+#   # Example
+#   # disks = {
+#   #   scsi0 = {
+#   #     datastore_id = "local-lvm"
+#   #     size         = 8
+#   #   }
+#   #   scsi1 = {
+#   #     datastore_id = "local-lvm"
+#   #     size         = 16
+#   #   }
+#   # }
+# }
 
 variable "vm_cpus" {
   description = "Proxmox VM number of CPUs"
@@ -124,6 +124,12 @@ variable "vm_disk_size_in_gb" {
   description = "[Deprecated] Use vm_disk. Proxmox VM disk size in GiB"
   type        = number
   default     = 8
+}
+
+variable "vm_extra_disk_size_in_gb" {
+  description = "Proxmox VM EXTRA disk size in GiB (use 0 to not deploy extra disk)"
+  type        = number
+  default     = 0
 }
 
 variable "vm_ip" {
