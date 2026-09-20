@@ -65,7 +65,7 @@ variable "vm_name" {
 
 variable "created_by" {
   description = "The name of the maintainer of this configs"
-  default = "me"
+  default     = "me"
 }
 
 variable "vm_id" {
@@ -82,8 +82,12 @@ variable "vm_storage_pool" {
 
 variable "vm_disks" {
   type = map(object({
-    datastore_id  = optional(string, "local-lvm")
-    size          = optional(number, 8)
+    size              = optional(number, 8)
+    datastore_id      = optional(string, "local-lvm")
+    path_in_datastore = optional(string, "")
+    file_format       = optional(string, "")
+    file_id           = optional(string, "")
+    ssd               = optional(bool, true)
   }))
   # Example
   # disks = {
@@ -150,7 +154,7 @@ variable "ssh_private_key_path" {
 }
 
 variable "add_user_to_docker_group" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
   description = "If you use a base image already with docker installed, you can choose to add user to docker group"
 }

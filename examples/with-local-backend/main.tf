@@ -6,17 +6,17 @@ module "vm" {
   px_node              = "pve"
   ssh_private_key_path = "~/.ssh/id_ed25519"
   # vm specs
-  vm_name            = var.vm_name
-  vm_id              = 100
-  clone_from         = 7001
-  vm_cpus            = 1
-  vm_mem_in_mb       = 1024
-  vm_ip              = "10.10.10.10/24" # "dhcp" OR ip/mask
-  vm_gw_ip           = "10.10.10.254"   # only used when vm_ip is not "dhcp"
-  vm_vswitch         = "vmbr0"
-  vm_services        = ["Demo Svc"]
-  extra_tags         = ["dev"]
-  
+  vm_name      = var.vm_name
+  vm_id        = 100
+  clone_from   = 7001
+  vm_cpus      = 1
+  vm_mem_in_mb = 1024
+  vm_ip        = "10.10.10.10/24" # "dhcp" OR ip/mask
+  vm_gw_ip     = "10.10.10.254"   # only used when vm_ip is not "dhcp"
+  vm_vswitch   = "vmbr0"
+  vm_services  = ["Demo Svc"]
+  extra_tags   = ["dev"]
+
   vm_disks = {
     scsi0 = {
       datastore_id = "local-lvm"

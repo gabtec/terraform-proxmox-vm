@@ -2,9 +2,9 @@ locals { just_ip = split("/", var.vm_ip)[0] }
 
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
-  vm_id       = var.vm_id
-  name = var.vm_name
-  node_name   = var.px_node
+  vm_id     = var.vm_id
+  name      = var.vm_name
+  node_name = var.px_node
   tags      = concat([local.just_ip], var.extra_tags)
 
   agent {
@@ -30,14 +30,17 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     # shared = 1024 # in MiB
   }
 
-  dynamic disk {
+  dynamic "disk" {
     for_each = var.vm_disks
 
     content {
-      interface    = disk.key               # scsi | sata | virtio (+ index number)
-      datastore_id = disk.value.datastore_id
-      size         = disk.value.size              # disk size in gigabytes (defaults to 8).
-      ssd          = true                   # not supported in interface=virtio
+      interface         = disk.key                        # scsi | sata | virtio (+ index number)
+      datastore_id      = disk.value["datastore_id"]      # optional
+      path_in_datastore = disk.value["path_in_datastore"] # optional
+      file_format       = disk.value["file_format"]       # optional: qcow2 | raw | vmdk
+      file_id           = disk.value["file_id"]           # optional: use to import a disk, e.g. "<datastore_id>:<content_type>/<file_name>"
+      size              = disk.value["size"]              # disk size in gigabytes (defaults to 8).
+      ssd               = disk.value["ssd"]               # not supported in interface=virtio
     }
   }
 
@@ -90,7 +93,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     ${join("\n", [for s in var.vm_services : "- ${s}"])}
 
     ## Tags
-    - createdBy: ${ var.created_by }
+    - createdBy: ${var.created_by}
     - createdFor: Homelab
     - createdWith: Terraform
   EOT
@@ -102,9 +105,9 @@ resource "null_resource" "provision_user_on_docker_group" {
   count = var.add_user_to_docker_group ? 1 : 0
 
   connection {
-    type     = "ssh"
-    user     = var.vm_user
-    host     = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
+    type        = "ssh"
+    user        = var.vm_user
+    host        = proxmox_virtual_environment_vm.ubuntu_vm.ipv4_addresses[1][0]
     private_key = file(var.ssh_private_key_path)
   }
 
