@@ -30,38 +30,38 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     # shared = 1024 # in MiB
   }
 
-  disk {
-    datastore_id = var.vm_storage_pool
-    interface    = "scsi0"                # scsi | sata | virtio (+ index number)
-    size         = var.vm_disk_size_in_gb # disk size in gigabytes (defaults to 8).
-    ssd          = true                   # not supported in interface=virtio
-  }
+  # disk {
+  #   datastore_id = var.vm_storage_pool
+  #   interface    = "scsi0"                # scsi | sata | virtio (+ index number)
+  #   size         = var.vm_disk_size_in_gb # disk size in gigabytes (defaults to 8).
+  #   ssd          = true                   # not supported in interface=virtio
+  # }
 
-  # only define 2nd disk is size > 0
-  dynamic "disk" {
-    for_each = var.vm_extra_disk_size_in_gb > 0 ? [1] : []
-
-    content {
-      datastore_id = var.vm_storage_pool
-      size         = var.vm_extra_disk_size_in_gb
-      interface    = "scsi1"
-      ssd          = true
-    }
-  }
-
+  # # only define 2nd disk is size > 0
   # dynamic "disk" {
-  #   for_each = var.vm_disks
+  #   for_each = var.vm_extra_disk_size_in_gb > 0 ? [1] : []
 
   #   content {
-  #     interface         = disk.key                     # scsi | sata | virtio (+ index number)
-  #     datastore_id      = disk.value.datastore_id      # optional
-  #     file_format       = disk.value.file_format       # optional: qcow2 | raw | vmdk
-  #     # path_in_datastore = disk.value.path_in_datastore # optional
-  #     # file_id           = disk.value.file_id           # optional: use to import a disk, e.g. "<datastore_id>:<content_type>/<file_name>"
-  #     size              = disk.value.size              # disk size in gigabytes (defaults to 8).
-  #     ssd               = disk.value.ssd               # not supported in interface=virtio
+  #     datastore_id = var.vm_storage_pool
+  #     size         = var.vm_extra_disk_size_in_gb
+  #     interface    = "scsi1"
+  #     ssd          = true
   #   }
   # }
+
+  dynamic "disk" {
+    for_each = var.vm_disks
+
+    content {
+      interface         = disk.key                     # scsi | sata | virtio (+ index number)
+      datastore_id      = disk.value.datastore_id      # optional
+      file_format       = disk.value.file_format       # optional: qcow2 | raw | vmdk
+      path_in_datastore = disk.value.path_in_datastore # optional
+      file_id           = disk.value.file_id           # optional: use to import a disk, e.g. "<datastore_id>:<content_type>/<file_name>"
+      size              = disk.value.size              # disk size in gigabytes (defaults to 8).
+      ssd               = disk.value.ssd               # not supported in interface=virtio
+    }
+  }
 
   # for Cloud-init
   initialization {
