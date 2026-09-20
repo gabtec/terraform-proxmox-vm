@@ -3,7 +3,7 @@
 | Name | Version |
 | ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12.0 |
-| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | >=0.104.0 |
+| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | >=0.113.1 |
 
 ## Providers
 
@@ -36,7 +36,8 @@ No modules.
 | <a name="input_ssh_private_key_path"></a> [ssh\_private\_key\_path](#input\_ssh\_private\_key\_path) | SSH private key path | `string` | `"~/.ssh/id_ed25519"` | no |
 | <a name="input_vm_authorized_ssh_keys"></a> [vm\_authorized\_ssh\_keys](#input\_vm\_authorized\_ssh\_keys) | All public ssh keys authorized to access this vm (in a json list(string)) | `string` | n/a | yes |
 | <a name="input_vm_cpus"></a> [vm\_cpus](#input\_vm\_cpus) | Proxmox VM number of CPUs | `number` | `1` | no |
-| <a name="input_vm_disk_size_in_gb"></a> [vm\_disk\_size\_in\_gb](#input\_vm\_disk\_size\_in\_gb) | Proxmox VM disk size in GiB | `number` | `8` | no |
+| <a name="input_vm_disk_size_in_gb"></a> [vm\_disk\_size\_in\_gb](#input\_vm\_disk\_size\_in\_gb) | [Deprecated] Use vm\_disk. Proxmox VM disk size in GiB | `number` | `8` | no |
+| <a name="input_vm_disks"></a> [vm\_disks](#input\_vm\_disks) | n/a | <pre>map(object({<br/>    size              = optional(number, 8)<br/>    ssd               = optional(bool, true)<br/>    datastore_id      = optional(string, "local-lvm")<br/>    path_in_datastore = optional(string, null)<br/>    file_format       = optional(string, null)<br/>    file_id           = optional(string, null)<br/>  }))</pre> | n/a | yes |
 | <a name="input_vm_gw_ip"></a> [vm\_gw\_ip](#input\_vm\_gw\_ip) | Network Gateway IP | `string` | `"192.168.10.254"` | no |
 | <a name="input_vm_id"></a> [vm\_id](#input\_vm\_id) | Proxmox VM id | `number` | `1000` | no |
 | <a name="input_vm_ip"></a> [vm\_ip](#input\_vm\_ip) | Proxmox VM IP. Can be 'dhcp' keyword or IP that MUST include /netmask | `string` | `"dhcp"` | no |
@@ -44,7 +45,7 @@ No modules.
 | <a name="input_vm_name"></a> [vm\_name](#input\_vm\_name) | Proxmox VM name | `string` | `"server"` | no |
 | <a name="input_vm_secret"></a> [vm\_secret](#input\_vm\_secret) | The user password to login into the vm | `any` | n/a | yes |
 | <a name="input_vm_services"></a> [vm\_services](#input\_vm\_services) | A list of services running in the VM. Will be listed in the notes markdown | `list` | `[]` | no |
-| <a name="input_vm_storage_pool"></a> [vm\_storage\_pool](#input\_vm\_storage\_pool) | The storage pool name, where to place vm disk | `string` | `"local-lvm"` | no |
+| <a name="input_vm_storage_pool"></a> [vm\_storage\_pool](#input\_vm\_storage\_pool) | [Deprecated] Use vm\_disks. The storage pool name, where to place vm disk | `string` | `"local-lvm"` | no |
 | <a name="input_vm_user"></a> [vm\_user](#input\_vm\_user) | The username to login into the vm | `any` | n/a | yes |
 | <a name="input_vm_vswitch"></a> [vm\_vswitch](#input\_vm\_vswitch) | Proxmox virtual switch to connect VM to | `string` | `"vmbr0"` | no |
 
