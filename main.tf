@@ -15,7 +15,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   clone {
     full         = true
     vm_id        = var.clone_from
-    datastore_id = var.tpl_storage_pool
+    datastore_id = var.clone_spool
   }
 
   cpu {
