@@ -92,8 +92,8 @@ variable "vm_disks" {
     ssd               = optional(bool, true)
     datastore_id      = optional(string, "local-lvm")
     file_format       = optional(string, "raw")
-    path_in_datastore = optional(string)
-    file_id           = optional(string)
+    # path_in_datastore = optional(string)
+    # file_id           = optional(string)
   }))
   # Example
   # disks = {
