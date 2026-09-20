@@ -21,7 +21,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   cpu {
     cores   = var.vm_cpus
     sockets = 1
-    type    = "host" # default is qemu64 but not recommended
+    type    = "x86-64-v2-AES"
   }
 
   memory {
