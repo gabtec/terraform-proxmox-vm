@@ -9,6 +9,7 @@ module "vm" {
   vm_name      = var.vm_name
   vm_id        = 100
   clone_from   = 7001
+  clone_spool  = "local-lvm"
   vm_cpus      = 1
   vm_mem_in_mb = 1024
   vm_ip        = "10.10.10.10/24" # "dhcp" OR ip/mask
