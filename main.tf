@@ -34,13 +34,13 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     for_each = var.vm_disks
 
     content {
-      interface         = disk.key                        # scsi | sata | virtio (+ index number)
-      datastore_id      = disk.value["datastore_id"]      # optional
-      path_in_datastore = disk.value["path_in_datastore"] # optional
-      file_format       = disk.value["file_format"]       # optional: qcow2 | raw | vmdk
-      file_id           = disk.value["file_id"]           # optional: use to import a disk, e.g. "<datastore_id>:<content_type>/<file_name>"
-      size              = disk.value["size"]              # disk size in gigabytes (defaults to 8).
-      ssd               = disk.value["ssd"]               # not supported in interface=virtio
+      interface         = disk.key                     # scsi | sata | virtio (+ index number)
+      datastore_id      = disk.value.datastore_id      # optional
+      path_in_datastore = disk.value.path_in_datastore # optional
+      file_format       = disk.value.file_format       # optional: qcow2 | raw | vmdk
+      file_id           = disk.value.file_id           # optional: use to import a disk, e.g. "<datastore_id>:<content_type>/<file_name>"
+      size              = disk.value.size              # disk size in gigabytes (defaults to 8).
+      ssd               = disk.value.ssd               # not supported in interface=virtio
     }
   }
 
