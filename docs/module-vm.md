@@ -29,6 +29,7 @@ No modules.
 | ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_add_user_to_docker_group"></a> [add\_user\_to\_docker\_group](#input\_add\_user\_to\_docker\_group) | If you use a base image already with docker installed, you can choose to add user to docker group | `bool` | `false` | no |
 | <a name="input_clone_from"></a> [clone\_from](#input\_clone\_from) | The VM Template ID to clone | `number` | `9024` | no |
+| <a name="input_clone_spool"></a> [clone\_spool](#input\_clone\_spool) | The storage pool name, where the template to clone is | `string` | `"local-lvm"` | no |
 | <a name="input_created_by"></a> [created\_by](#input\_created\_by) | The name of the maintainer of this configs | `string` | `"me"` | no |
 | <a name="input_extra_tags"></a> [extra\_tags](#input\_extra\_tags) | Extra tags to add to the vm. By default the IP is added | `list` | `[]` | no |
 | <a name="input_px_addr"></a> [px\_addr](#input\_px\_addr) | Proxmox Server Address (ip:port or fqdn) | `string` | `"https://127.0.0.1:8006"` | no |
@@ -37,7 +38,7 @@ No modules.
 | <a name="input_vm_authorized_ssh_keys"></a> [vm\_authorized\_ssh\_keys](#input\_vm\_authorized\_ssh\_keys) | All public ssh keys authorized to access this vm (in a json list(string)) | `string` | n/a | yes |
 | <a name="input_vm_cpus"></a> [vm\_cpus](#input\_vm\_cpus) | Proxmox VM number of CPUs | `number` | `1` | no |
 | <a name="input_vm_disk_size_in_gb"></a> [vm\_disk\_size\_in\_gb](#input\_vm\_disk\_size\_in\_gb) | [Deprecated] Use vm\_disk. Proxmox VM disk size in GiB | `number` | `8` | no |
-| <a name="input_vm_disks"></a> [vm\_disks](#input\_vm\_disks) | n/a | <pre>map(object({<br/>    size              = optional(number, 8)<br/>    ssd               = optional(bool, true)<br/>    datastore_id      = optional(string, "local-lvm")<br/>    path_in_datastore = optional(string, null)<br/>    file_format       = optional(string, null)<br/>    file_id           = optional(string, null)<br/>  }))</pre> | n/a | yes |
+| <a name="input_vm_disks"></a> [vm\_disks](#input\_vm\_disks) | n/a | <pre>map(object({<br/>    size              = optional(number, 8)<br/>    ssd               = optional(bool, true)<br/>    datastore_id      = optional(string, "local-lvm")<br/>    file_format       = optional(string, "raw")<br/>    path_in_datastore = optional(string)<br/>    file_id           = optional(string)<br/>  }))</pre> | n/a | yes |
 | <a name="input_vm_gw_ip"></a> [vm\_gw\_ip](#input\_vm\_gw\_ip) | Network Gateway IP | `string` | `"192.168.10.254"` | no |
 | <a name="input_vm_id"></a> [vm\_id](#input\_vm\_id) | Proxmox VM id | `number` | `1000` | no |
 | <a name="input_vm_ip"></a> [vm\_ip](#input\_vm\_ip) | Proxmox VM IP. Can be 'dhcp' keyword or IP that MUST include /netmask | `string` | `"dhcp"` | no |

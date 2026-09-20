@@ -80,6 +80,12 @@ variable "vm_storage_pool" {
   default     = "local-lvm"
 }
 
+variable "clone_spool" {
+  description = "The storage pool name, where the template to clone is"
+  type        = string
+  default     = "local-lvm"
+}
+
 variable "vm_disks" {
   type = map(object({
     size              = optional(number, 8)
@@ -119,6 +125,12 @@ variable "vm_disk_size_in_gb" {
   type        = number
   default     = 8
 }
+
+# variable "vm_extra_disk_size_in_gb" {
+#   description = "Proxmox VM EXTRA disk size in GiB (use 0 to not deploy extra disk)"
+#   type        = number
+#   default     = 0
+# }
 
 variable "vm_ip" {
   type        = string
